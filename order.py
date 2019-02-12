@@ -4,37 +4,37 @@
 """
 from random import randint
 
-list_val=[]
 dict={}
 class Order(object):
 
-	def __init__(self,num_elem):
-		self._groupList=num_elem
-		self._number=None
-		print(self.groupList)
+	def __init__(self,g_List=None,value=None):
+		self.__groupList=[]
+		self.group_list =g_List
 
+		self.__value=value
+		
 
 	@property
-	def groupList(self):
-		print("Getting Values!")
-		return self._groupList
+	def group_list(self):
+		return self.__groupList
 	
-	@groupList.setter
-	def _groupList(self,num_elem):
-		global list_val
-		for _ in range(num_elem):
-			currentelement= randint(1,15)
-			list_val.append(currentelement)
-		self._groupList=list(set(list_val))
+	@group_list.setter
+	def group_list(self,list_val):
+		if list_val is None:
+			for _ in range(10):
+				self.__groupList.append(randint(1,15))
+		elif isinstance(list_val,list):
+			self.__groupList=list_val
+
 
 	@property
 	def number(self):
-		return self._number
+		return self.__value
 
-	@number.setter
-	def number(self,val):
+	
+	def ask_user_for_number(self):
 		val=input('Enter any number from the list: ')
-		self._number=val
+		self.__value=int(val)
 
 	def computePower(self):
 		global dict
@@ -46,12 +46,20 @@ class Order(object):
 			if tempVar==self.number:
 				print("The group is cyclic!")
 				print("Order of The number {} is {}".format(self.number,i))
-				return
-			
+				return			
 			i+=1
 
+def main():
+	print("Example with random list")
+	obj = Order()
+	print("List of numbers: {}".format(obj.group_list))
+	#print("User selected: {}".format(obj.number))
+	obj.ask_user_for_number()
+	in_list = obj.number in obj.group_list
+	print(in_list)
+
 if __name__ == '__main__':
-	Order(num_elem=10)
+	main()
 	
 
 			

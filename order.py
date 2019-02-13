@@ -3,7 +3,6 @@
 
 """
 from random import randint
-from collections import Counter
 
 
 class Order(object):
@@ -13,6 +12,7 @@ class Order(object):
 		self.group_list =g_List #group_list being a property returns a list 
 		self.__value=value
 		
+
 	@property
 	def group_list(self):
 		return self.__groupList
@@ -71,6 +71,7 @@ def main():
 	print("Example with random list")
 	obj = Order()
 	print("List of numbers: {}".format(obj.group_list))
+	#print("User selected: {}".format(obj.number))
 	obj.ask_user_for_number()
 	obj.computePower()
 	#in_list = obj.number in obj.group_list

@@ -4,54 +4,81 @@
 """
 from random import randint
 
-list_val=[]
-dict={}
+
 class Order(object):
 
-	def __init__(self,num_elem):
-		self._groupList=num_elem
-		self._number=None
-		print(self.groupList)
-
+	def __init__(self,g_List=None,value=None):
+		self.__groupList=[]
+		self.group_list =g_List #group_list being a property returns a list 
+		self.__value=value
+		
 
 	@property
-	def groupList(self):
-		print("Getting Values!")
-		return self._groupList
+	def group_list(self):
+		return self.__groupList
 	
-	@groupList.setter
-	def _groupList(self,num_elem):
-		global list_val
-		for _ in range(num_elem):
-			currentelement= randint(1,15)
-			list_val.append(currentelement)
-		self._groupList=list(set(list_val))
+	@group_list.setter
+	def group_list(self,list_val):
+		if list_val is None:
+			print("first scenario")
+			for _ in range(10):
+				#print("adding!")
+				self.__groupList.append(randint(1,10))
+		#elif isinstance(list_val,list):
+		#	print("last case")
+		#	self.__groupList=list_val
+
 
 	@property
 	def number(self):
-		return self._number
+		return self.__value
 
-	@number.setter
-	def number(self,val):
+	
+	def ask_user_for_number(self):
 		val=input('Enter any number from the list: ')
-		self._number=val
+		self.__value=int(val)
 
 	def computePower(self):
-		global dict
-		length=len(self.group_list)
-		i=1
-		while i>1:
-			dict[i]=dict[i-1]^self.number
-			tempVar=dict[i] % length 
-			if tempVar==self.number:
-				print("The group is cyclic!")
-				print("Order of The number {} is {}".format(self.number,i))
-				return
-			
-			i+=1
+		listValue=[]
+		dict={}
+		groupList=self.group_list
+		value=self.number
+		length=len(groupList)
+		c=0
+		while True:
+			for i in range(1,30):
+				if dict.items() is None:
+					dict[i]=value
+				else:
+					dict[i]=(value**i)%(length+1)
+			break
+		print(dict)
+		for val in dict.values():
+			if val==value:
+				c+=1
+			else:
+				#print("Will continue!")
+				continue
+			if c==2:
+				#print(val)
+				max_key=list(dict.keys())[list(dict.values()).index(dict[i])]+1
+				print('Order of {} is: {}'.format(value,max_key))
+				print("Its cyclic!")
+				break
+
+		
+def main():
+	print("Example with random list")
+	obj = Order()
+	print("List of numbers: {}".format(obj.group_list))
+	#print("User selected: {}".format(obj.number))
+	obj.ask_user_for_number()
+	obj.computePower()
+	#in_list = obj.number in obj.group_list
+	#print(in_list)
 
 if __name__ == '__main__':
-	Order(num_elem=10)
+	main()
 	
 
 			
